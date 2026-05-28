@@ -1,0 +1,1069 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mubarok Tour Organizer - Modern Travel & Destination</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #3b82f6;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 antialiased custom-scrollbar">
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-3"></div>
+
+  <!-- HEADER / NAV -->
+  <header class="bg-blue-950/95 backdrop-blur text-white sticky top-0 z-50 shadow-lg border-b border-blue-900">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="bg-amber-400 text-blue-950 p-2.5 rounded-xl font-black text-2xl tracking-wider shadow">
+          M
+        </div>
+        <div>
+          <h1 class="text-2xl font-black tracking-tight leading-none">Mubarok<span class="text-amber-400">Tour</span></h1>
+          <span class="text-[10px] text-amber-300 tracking-widest uppercase font-semibold">Tour Organizer</span>
+        </div>
+      </div>
+      
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex gap-8 text-sm font-semibold tracking-wide uppercase items-center">
+        <a href="#tentang" class="hover:text-amber-400 transition duration-300">Tentang</a>
+        <a href="#paket" class="hover:text-amber-400 transition duration-300">Paket Wisata</a>
+        <a href="#galeri" class="hover:text-amber-400 transition duration-300">Galeri</a>
+        <a href="#testimoni" class="hover:text-amber-400 transition duration-300">Testimoni</a>
+        <a href="#kontak" class="hover:text-amber-400 transition duration-300">Kontak</a>
+        <button onclick="showAdmin()" class="bg-amber-400 hover:bg-amber-500 text-blue-950 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow transition duration-300 flex items-center gap-2">
+          <i class="fas fa-cog"></i> Kelola Web
+        </button>
+      </nav>
+
+      <!-- Mobile Button -->
+      <button onclick="toggleMobileMenu()" class="text-2xl md:hidden focus:outline-none text-amber-400">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU (DIPERBAIKI: Menggunakan inline style background solid & z-index tertinggi agar tidak transparan / numpuk) -->
+  <div id="mobile-menu" class="hidden fixed inset-0 z-[100] flex flex-col justify-center items-center gap-8 text-2xl text-white font-bold" style="background-color: #0b132a; min-height: 100vh;">
+    <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-3xl text-amber-400">
+      <i class="fas fa-times"></i>
+    </button>
+    <a href="#tentang" onclick="toggleMobileMenu()" class="hover:text-amber-400 transition">Tentang</a>
+    <a href="#paket" onclick="toggleMobileMenu()" class="hover:text-amber-400 transition">Paket Wisata</a>
+    <a href="#galeri" onclick="toggleMobileMenu()" class="hover:text-amber-400 transition">Galeri</a>
+    <a href="#testimoni" onclick="toggleMobileMenu()" class="hover:text-amber-400 transition">Testimoni</a>
+    <a href="#kontak" onclick="toggleMobileMenu()" class="hover:text-amber-400 transition">Kontak</a>
+    <button onclick="toggleMobileMenu(); showAdmin();" class="mt-4 bg-amber-400 text-blue-950 px-8 py-3 rounded-2xl font-bold text-lg">
+      <i class="fas fa-cog mr-2"></i> Kelola Web
+    </button>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section id="hero-section" class="relative min-h-[90vh] flex items-center justify-center text-center text-white py-24 bg-cover bg-center transition-all duration-700" style="background-image: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');">
+    <div class="absolute inset-0 bg-gradient-to-b from-blue-950/50 via-transparent to-slate-50"></div>
+    <div class="relative max-w-4xl px-6 z-10">
+      <span class="bg-amber-400/20 text-amber-300 border border-amber-400/30 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-6 inline-block">
+        ✨ Terpercaya Sejak 2015
+      </span>
+      <h1 id="hero-title" class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight drop-shadow-md">
+        Mubarok Tour Organizer
+      </h1>
+      <p id="hero-subtitle" class="text-lg md:text-2xl text-slate-200 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+        Mitra Perjalanan Terbaik untuk Menjelajahi Keindahan Nusantara Secara Aman, Nyaman, & Berkesan.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <button onclick="document.getElementById('paket').scrollIntoView({behavior:'smooth'})" 
+                class="bg-amber-400 hover:bg-amber-500 text-blue-950 px-10 py-4 rounded-2xl text-lg font-bold shadow-xl shadow-amber-500/20 transform hover:-translate-y-1 transition duration-300">
+          Jelajahi Paket Wisata <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+        <a href="#kontak" 
+           class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-10 py-4 rounded-2xl text-lg font-bold backdrop-blur-sm transform hover:-translate-y-1 transition duration-300">
+          Konsultasi Gratis
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TENTANG SECTION -->
+  <section id="tentang" class="py-24 bg-white relative overflow-hidden">
+    <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-50"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <span class="text-amber-500 font-bold uppercase tracking-widest text-sm block mb-2">SIAPA KAMI</span>
+          <h2 class="text-3xl md:text-4xl font-black text-blue-950 mb-6 leading-tight">Berkomitmen Menghadirkan Liburan Impian Anda</h2>
+          <p class="text-slate-600 text-lg leading-relaxed mb-6">
+            Mubarok Tour Organizer adalah penyedia layanan paket perjalanan wisata (tour planner) yang berbasis di Tasikmalaya. Sejak didirikan pada tahun 2015, kami berkomitmen memberikan kenyamanan terbaik untuk liburan keluarga, perjalanan instansi, study tour sekolah, hingga petualangan alam bebas.
+          </p>
+          <div class="grid grid-cols-2 gap-6 mt-8">
+            <div class="flex items-start gap-4">
+              <div class="bg-blue-100 text-blue-600 p-3 rounded-2xl">
+                <i class="fas fa-shield-alt text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-blue-950">100% Aman</h4>
+                <p class="text-sm text-slate-500">Legalitas terjamin & kru berpengalaman.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="bg-amber-100 text-amber-600 p-3 rounded-2xl">
+                <i class="fas fa-coins text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-blue-950">Harga Terbaik</h4>
+                <p class="text-sm text-slate-500">Fasilitas premium dengan harga kompetitif.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="aspect-video lg:aspect-square bg-slate-100 rounded-3xl overflow-hidden shadow-2xl relative">
+            <img id="about-img" src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="About us image" class="w-full h-full object-cover">
+            <div class="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur p-6 rounded-2xl shadow-lg border border-white/25">
+              <div class="flex items-center gap-4">
+                <span class="text-4xl font-black text-blue-600">11+</span>
+                <div>
+                  <h5 class="font-bold text-slate-900">Tahun Pengalaman</h5>
+                  <p class="text-xs text-slate-500">Melayani ribuan wisatawan domestik & mancanegara</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAKET SECTION -->
+  <section id="paket" class="py-24 bg-slate-100 relative">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-blue-600 font-bold uppercase tracking-widest text-sm block mb-2">REKOMENDASI TERBAIK</span>
+        <h2 class="text-3xl md:text-4xl font-black text-blue-950">Paket Wisata Unggulan</h2>
+        <p class="text-slate-500 mt-4 text-base">Pilih destinasi impian Anda dengan paket harga bersahabat dan fasilitas super lengkap.</p>
+      </div>
+      
+      <div id="paket-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Rendered Dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERI SECTION -->
+  <section id="galeri" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-amber-500 font-bold uppercase tracking-widest text-sm block mb-2">DOKUMENTASI KAMI</span>
+        <h2 class="text-3xl md:text-4xl font-black text-blue-950">Galeri Perjalanan Seru</h2>
+        <p class="text-slate-500 mt-4">Kumpulan momen bahagia dari para pelanggan setia Mubarok Tour.</p>
+      </div>
+      
+      <div id="galeri-list" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Rendered Dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONI SECTION -->
+  <section id="testimoni" class="py-24 bg-slate-100 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-blue-600 font-bold uppercase tracking-widest text-sm block mb-2">KATA MEREKA</span>
+        <h2 class="text-3xl md:text-4xl font-black text-blue-950">Ulasan & Testimoni</h2>
+        <p class="text-slate-500 mt-4">Cerita jujur dari pelanggan kami tentang keseruan perjalanan bersama Mubarok Tour.</p>
+      </div>
+
+      <div id="testimoni-list" class="grid md:grid-cols-3 gap-8">
+        <!-- Rendered Dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAK SECTION -->
+  <section id="kontak" class="py-24 bg-blue-950 text-white relative">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-12 gap-16 items-start">
+        <div class="lg:col-span-5">
+          <span class="text-amber-400 font-bold uppercase tracking-widest text-sm block mb-2">HUBUNGI KAMI</span>
+          <h2 class="text-4xl font-black mb-6 leading-tight">Siap Merencanakan Liburan Anda?</h2>
+          <p class="text-slate-300 mb-10 leading-relaxed">Hubungi admin kami via telepon atau pesan WhatsApp untuk konsultasi rute, destinasi custom, serta penawaran harga khusus.</p>
+          
+          <div class="space-y-6">
+            <div class="flex items-center gap-4">
+              <div class="bg-blue-900 text-amber-400 p-4 rounded-2xl">
+                <i class="fas fa-map-marker-alt text-xl"></i>
+              </div>
+              <div>
+                <h5 class="text-xs text-slate-400 uppercase tracking-widest">Kantor Pusat</h5>
+                <p class="text-sm font-semibold mt-1">Jl. Raya Cikeleng RT.20 RW.04 Arjasari, Tasikmalaya, Jawa Barat</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="bg-blue-900 text-amber-400 p-4 rounded-2xl">
+                <i class="fas fa-phone-alt text-xl"></i>
+              </div>
+              <div>
+                <h5 class="text-xs text-slate-400 uppercase tracking-widest">Telepon / WhatsApp</h5>
+                <p class="text-sm font-semibold mt-1">0852-9472-4777 / 0821-3038-8011</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="bg-blue-900 text-amber-400 p-4 rounded-2xl">
+                <i class="fas fa-envelope text-xl"></i>
+              </div>
+              <div>
+                <h5 class="text-xs text-slate-400 uppercase tracking-widest">Email Resmi</h5>
+                <p class="text-sm font-semibold mt-1">travelmobuarok2@gmail.com</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 bg-white text-slate-900 p-8 md:p-10 rounded-3xl shadow-2xl border border-white/10">
+          <h3 class="text-2xl font-bold mb-6 text-blue-950">Kirim Pesan Cepat</h3>
+          <form id="contact-form" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Nama Lengkap</label>
+              <input type="text" id="contact-nama" placeholder="Masukkan nama Anda" class="w-full p-4 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50" required>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Nomor WhatsApp</label>
+              <input type="tel" id="contact-nohp" placeholder="Contoh: 0812345678" class="w-full p-4 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50" required>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Isi Pesan Anda</label>
+              <textarea id="contact-pesan" placeholder="Halo Mubarok Tour, saya ingin menanyakan..." rows="4" class="w-full p-4 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50" required></textarea>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-bold text-lg transition duration-300 shadow-lg shadow-blue-500/20">
+              Kirim via WhatsApp <i class="fab fa-whatsapp ml-2 text-xl"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-6 text-center md:flex md:justify-between md:items-center">
+      <p class="text-sm">&copy; 2026 Mubarok Tour Organizer. All rights reserved.</p>
+      <div class="flex justify-center gap-6 mt-4 md:mt-0 text-lg">
+        <a href="#" class="hover:text-amber-400"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="hover:text-amber-400"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="hover:text-amber-400"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING ACTION / CALL WA -->
+  <a href="https://wa.me/6285294724777" target="_blank" class="fixed bottom-6 left-6 bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl z-40 flex items-center justify-center text-2xl transition duration-300 transform hover:scale-110">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- ADMIN TOGGLE FLOAT -->
+  <button onclick="showAdmin()" class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl z-40 flex items-center justify-center text-xl transition duration-300 transform hover:scale-110">
+    <i class="fas fa-cog"></i>
+  </button>
+
+  <!-- LIGHTBOX / PHOTO VIEWER -->
+  <div id="lightbox" class="hidden fixed inset-0 bg-black/95 z-[999] flex items-center justify-center p-4">
+    <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white text-3xl hover:text-amber-400"><i class="fas fa-times"></i></button>
+    <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] rounded-xl object-contain shadow-2xl">
+  </div>
+
+  <!-- BOOKING MODAL -->
+  <div id="booking-modal" class="hidden fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 md:p-8 w-full max-w-lg shadow-2xl transform transition-all relative">
+      <button onclick="closeBookingModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 text-2xl"><i class="fas fa-times"></i></button>
+      <h3 class="text-2xl font-bold text-blue-950 mb-2">Formulir Pemesanan</h3>
+      <p id="booking-package-name" class="text-amber-600 font-semibold mb-6"></p>
+      
+      <form id="booking-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Nama Pemesan</label>
+          <input type="text" id="book-nama" class="w-full p-3 border rounded-xl" required>
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Jumlah Peserta (Orang)</label>
+          <input type="number" id="book-peserta" min="1" class="w-full p-3 border rounded-xl" required>
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Tanggal Keberangkatan</label>
+          <input type="date" id="book-tanggal" class="w-full p-3 border rounded-xl" required>
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Catatan Tambahan (Opsional)</label>
+          <textarea id="book-catatan" rows="3" class="w-full p-3 border rounded-xl"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-4 rounded-xl font-bold transition">
+          Kirim via WhatsApp <i class="fab fa-whatsapp ml-1"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADMIN MANAGEMENT PANEL (CMS) -->
+  <div id="admin-panel" class="hidden fixed inset-0 bg-black/85 z-[200] flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+      <!-- Admin Header -->
+      <div class="bg-blue-950 text-white p-6 flex justify-between items-center border-b border-blue-900">
+        <div class="flex items-center gap-3">
+          <i class="fas fa-shield-alt text-2xl text-amber-400"></i>
+          <div>
+            <h2 class="text-xl font-bold">Mubarok Tour Admin Panel</h2>
+            <p class="text-xs text-slate-300">Kelola konten & ganti gambar dengan mudah</p>
+          </div>
+        </div>
+        <button onclick="hideAdmin()" class="text-2xl text-slate-300 hover:text-white"><i class="fas fa-times"></i></button>
+      </div>
+
+      <!-- Password Guard Overlay -->
+      <div id="admin-guard" class="p-8 flex flex-col items-center justify-center flex-1">
+        <div class="w-full max-w-sm text-center">
+          <i class="fas fa-lock text-5xl text-blue-900 mb-4"></i>
+          <h3 class="text-lg font-bold text-slate-800 mb-6">Autentikasi Administrator</h3>
+          <input type="password" id="admin-pass" placeholder="Masukkan Password Admin" class="w-full p-4 border rounded-2xl text-center font-bold tracking-widest mb-4">
+          <button onclick="loginAdmin()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-2xl font-bold shadow-lg">Masuk Panel</button>
+          <p class="text-xs text-slate-400 mt-3">(Password Default: <strong class="text-slate-600"></strong>)</p>
+        </div>
+      </div>
+
+      <!-- Dashboard Content (Scrollable) -->
+      <div id="admin-content" class="hidden flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar space-y-8 bg-slate-50">
+        <!-- HEADER KONTROL / BACKUP -->
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl flex flex-wrap gap-4 items-center justify-between">
+          <div>
+            <h4 class="font-bold text-blue-950">Backup & Restore Konten</h4>
+            <p class="text-xs text-slate-500">Unduh data perubahan Anda agar bisa dibuka di komputer lain.</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="exportData()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-2.5 rounded-xl font-bold"><i class="fas fa-download mr-1"></i> Ekspor Data (.json)</button>
+            <label class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-4 py-2.5 rounded-xl font-bold cursor-pointer inline-block text-center">
+              <i class="fas fa-upload mr-1"></i> Impor Data
+              <input type="file" id="import-file" class="hidden" accept=".json" onchange="importData(event)">
+            </label>
+          </div>
+        </div>
+
+        <!-- SETTING INFORMASI UTAMA & HERO BG -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border">
+          <h3 class="font-extrabold text-blue-950 mb-4 border-b pb-2"><i class="fas fa-image mr-2 text-amber-500"></i> Pengaturan Hero & Latar Belakang</h3>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Unggah Foto Background Hero baru (Max 3MB)</label>
+              <div class="border-2 border-dashed border-slate-200 rounded-2xl p-4 text-center cursor-pointer hover:border-blue-400 transition">
+                <input type="file" id="hero-bg-upload" accept="image/*" class="hidden" onchange="uploadHeroBg(this)">
+                <label for="hero-bg-upload" class="cursor-pointer">
+                  <i class="fas fa-cloud-upload-alt text-3xl text-blue-500 mb-2"></i>
+                  <span class="block text-xs text-slate-500 font-medium">Klik untuk pilih berkas gambar</span>
+                </label>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Judul Utama Web</label>
+                <input type="text" id="set-hero-title" class="w-full p-3 border rounded-xl text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Sub-judul Web</label>
+                <input type="text" id="set-hero-subtitle" class="w-full p-3 border rounded-xl text-sm">
+              </div>
+              <button onclick="saveHeroText()" class="bg-blue-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fas fa-save mr-1"></i> Simpan Teks Hero</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- KELOLA PAKET -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border">
+          <h3 class="font-extrabold text-blue-950 mb-4 border-b pb-2"><i class="fas fa-suitcase-rolling mr-2 text-amber-500"></i> Manajemen Paket Wisata</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-slate-50 p-4 rounded-xl space-y-3">
+              <h4 class="font-bold text-sm text-slate-700">Tambah / Edit Paket</h4>
+              <input type="hidden" id="edit-paket-idx" value="-1">
+              <div>
+                <input id="paket-nama" placeholder="Nama Paket (cth: Wisata Bali Premium)" class="w-full p-3 border rounded-xl text-sm mb-2">
+                <input id="paket-harga" placeholder="Harga (cth: Rp 1.500.000 / pax)" class="w-full p-3 border rounded-xl text-sm mb-2">
+                <textarea id="paket-deskripsi" placeholder="Deskripsi paket wisata..." rows="2" class="w-full p-3 border rounded-xl text-sm mb-2"></textarea>
+                
+                <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Foto Sampul Paket</label>
+                <input type="file" id="paket-img-upload" accept="image/*" class="w-full p-2 border rounded-xl text-xs bg-white mb-4">
+              </div>
+              <div class="flex gap-2">
+                <button onclick="savePaket()" class="bg-green-600 text-white text-xs font-bold px-4 py-3 rounded-xl flex-1"><i class="fas fa-plus mr-1"></i> Simpan Paket</button>
+                <button onclick="clearPaketForm()" class="bg-slate-300 text-slate-700 text-xs font-bold px-3 py-3 rounded-xl">Batal</button>
+              </div>
+            </div>
+            
+            <div>
+              <h4 class="font-bold text-sm text-slate-700 mb-3">Daftar Paket Aktif</h4>
+              <div id="admin-paket-list" class="space-y-2 max-h-[300px] overflow-y-auto">
+                <!-- Rendered Dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KELOLA GALERI -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border">
+          <h3 class="font-extrabold text-blue-950 mb-4 border-b pb-2"><i class="fas fa-images mr-2 text-amber-500"></i> Manajemen Galeri Foto</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-slate-50 p-4 rounded-xl space-y-3">
+              <h4 class="font-bold text-sm text-slate-700">Unggah Foto Baru ke Galeri</h4>
+              <div class="border-2 border-dashed border-slate-200 rounded-2xl p-6 text-center cursor-pointer hover:border-blue-400 transition bg-white">
+                <input type="file" id="galeri-upload" accept="image/*" class="hidden" onchange="uploadGaleri(this)">
+                <label for="galeri-upload" class="cursor-pointer">
+                  <i class="fas fa-images text-4xl text-blue-500 mb-2"></i>
+                  <span class="block text-sm text-slate-600 font-bold">Pilih Foto</span>
+                  <span class="text-xs text-slate-400 block mt-1">Format JPG/PNG maksimal 2MB</span>
+                </label>
+              </div>
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-slate-700 mb-3">Daftar Foto Galeri</h4>
+              <div id="admin-galeri-list" class="grid grid-cols-4 gap-2 max-h-[300px] overflow-y-auto">
+                <!-- Rendered Dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KELOLA TESTIMONI -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border">
+          <h3 class="font-extrabold text-blue-950 mb-4 border-b pb-2"><i class="fas fa-comment-dots mr-2 text-amber-500"></i> Manajemen Testimoni</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-slate-50 p-4 rounded-xl space-y-3">
+              <h4 class="font-bold text-sm text-slate-700">Tambah Testimoni</h4>
+              <input id="testi-nama" placeholder="Nama Customer" class="w-full p-3 border rounded-xl text-sm mb-2">
+              <textarea id="testi-text" placeholder="Kalimat testimoni..." rows="3" class="w-full p-3 border rounded-xl text-sm mb-2"></textarea>
+              <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Foto Avatar Customer (Opsional)</label>
+              <input type="file" id="testi-img-upload" accept="image/*" class="w-full p-2 border rounded-xl text-xs bg-white mb-4">
+              <button onclick="addTestimoni()" class="w-full bg-green-600 text-white text-xs font-bold py-3 rounded-xl"><i class="fas fa-check mr-1"></i> Tambah Testimoni</button>
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-slate-700 mb-3">Daftar Testimoni</h4>
+              <div id="admin-testi-list" class="space-y-2 max-h-[300px] overflow-y-auto">
+                <!-- Rendered Dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Footer -->
+      <div class="bg-slate-100 p-4 border-t flex justify-end gap-2">
+        <button onclick="resetToDefaultData()" class="bg-red-500 hover:bg-red-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fas fa-undo mr-1"></i> Reset Ke Data Pabrik</button>
+        <button onclick="hideAdmin()" class="bg-blue-950 hover:bg-blue-900 text-white text-xs font-bold px-5 py-2.5 rounded-xl">Keluar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // -------------------------------------------------------------------------
+    // SYSTEM DATABASE & CONFIGURATION (Stored in LocalStorage)
+    // -------------------------------------------------------------------------
+    const STORAGE_KEY = "mubarok_tour_data";
+
+    const defaultData = {
+      heroTitle: "Mubarok Tour Organizer",
+      heroSubtitle: "Mitra Perjalanan Terbaik untuk Menjelajahi Keindahan Nusantara Secara Aman, Nyaman, & Berkesan.",
+      heroBg: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80",
+      aboutImg: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80",
+      paketList: [
+        {
+          id: 1,
+          nama: "Family Gathering Bali Premium",
+          harga: "Rp 1.850.000 / Pax",
+          deskripsi: "Paket lengkap khusus kumpul keluarga. Menikmati pantai Kuta, Nusa Dua, makan malam romantis Jimbaran, dan bus eksekutif ber-AC.",
+          img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          id: 2,
+          nama: "Historical Study Tour Jogja",
+          harga: "Rp 650.000 / Siswa",
+          deskripsi: "Belajar sejarah asik mengunjungi Candi Borobudur, Keraton Yogyakarta, Tebing Breksi, dan jalan-jalan di legendaris Malioboro.",
+          img: "https://images.unsplash.com/photo-1626125313955-f2d18cb3e7e2?auto=format&fit=crop&w=800&q=80"
+        },
+        {
+          id: 3,
+          nama: "Adventure Trip Bromo Sunrise",
+          harga: "Rp 850.000 / Orang",
+          deskripsi: "Menyaksikan golden sunrise terbaik se-Jawa, berkendara dengan Jeep 4x4, menapaki pasir berbisik, dan kawah aktif Bromo.",
+          img: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=800&q=80"
+        }
+      ],
+      galeriList: [
+        "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=600&q=80"
+      ],
+      testimoniList: [
+        {
+          id: 1,
+          nama: "Budi Santoso (Tasikmalaya)",
+          text: "Pelayanan sangat ramah, pemandu sigap sepanjang jalan. Bis sangat bersih dan hotel yang dipilihkan super mewah! Sangat puas.",
+          img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"
+        },
+        {
+          id: 2,
+          nama: "Siti Rahayu (Arjasari)",
+          text: "Rekomendasi terbaik untuk Study Tour sekolah anak saya. Harganya bersahabat tapi layanannya premium dan porsinya mengenyangkan.",
+          img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"
+        },
+        {
+          id: 3,
+          nama: "Ahmad Fauzi (Bandung)",
+          text: "Rute custom yang kami pesan ke Mubarok Tour diatur dengan sangat efisien. Kru sabar menemani rombongan ibu-ibu belanja.",
+          img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+        }
+      ]
+    };
+
+    let siteData = {};
+
+    function initData() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        try {
+          siteData = JSON.parse(stored);
+        } catch(e) {
+          siteData = {...defaultData};
+        }
+      } else {
+        siteData = {...defaultData};
+      }
+      saveToStorage();
+      renderAll();
+    }
+
+    function saveToStorage() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(siteData));
+    }
+
+    function resetToDefaultData() {
+      if (confirm("Apakah Anda yakin ingin menghapus semua kustomisasi foto dan data untuk dikembalikan ke pengaturan awal?")) {
+        siteData = JSON.parse(JSON.stringify(defaultData));
+        saveToStorage();
+        renderAll();
+        showToast("✅ Berhasil meriset data ke setelan pabrik!", "success");
+        hideAdmin();
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // SYSTEM VIEW RENDERING
+    // -------------------------------------------------------------------------
+    function renderAll() {
+      renderHero();
+      renderPaket();
+      renderGaleri();
+      renderTestimoni();
+      
+      // Admin Render List
+      renderAdminPaket();
+      renderAdminGaleri();
+      renderAdminTestimoni();
+    }
+
+    function renderHero() {
+      document.getElementById('hero-section').style.backgroundImage = `linear-gradient(rgba(15, 23, 42, 0.72), rgba(15, 23, 42, 0.85)), url('${siteData.heroBg}')`;
+      document.getElementById('hero-title').textContent = siteData.heroTitle;
+      document.getElementById('hero-subtitle').textContent = siteData.heroSubtitle;
+      document.getElementById('about-img').src = siteData.aboutImg;
+
+      // Inputs in Admin Panel
+      document.getElementById('set-hero-title').value = siteData.heroTitle;
+      document.getElementById('set-hero-subtitle').value = siteData.heroSubtitle;
+    }
+
+    function renderPaket() {
+      const container = document.getElementById('paket-list');
+      if (siteData.paketList.length === 0) {
+        container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400">Belum ada paket wisata aktif. Silakan tambahkan lewat Admin Panel.</div>`;
+        return;
+      }
+
+      container.innerHTML = siteData.paketList.map(p => `
+        <div class="bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition duration-300 flex flex-col h-full border border-slate-100">
+          <div class="relative h-60 w-full overflow-hidden">
+            <img src="${p.img || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80'}" alt="${p.nama}" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+            <span class="absolute top-4 right-4 bg-blue-950 text-amber-400 font-extrabold text-xs px-4 py-2 rounded-full uppercase tracking-wider shadow">
+              <i class="fas fa-tags mr-1"></i> Favorit
+            </span>
+          </div>
+          <div class="p-8 flex flex-col justify-between flex-1">
+            <div>
+              <h3 class="text-2xl font-bold text-blue-950 leading-snug mb-3">${p.nama}</h3>
+              <p class="text-amber-500 font-extrabold text-xl mb-4">${p.harga}</p>
+              <p class="text-sm text-slate-500 leading-relaxed">${p.deskripsi}</p>
+            </div>
+            
+            <div class="pt-6 mt-6 border-t border-slate-100 flex gap-3">
+              <button onclick="openBookingModal('${p.nama}')" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider text-center transition duration-300">
+                Pesan Sekarang
+              </button>
+              <a href="https://wa.me/6285294724777?text=Halo%20Mubarok%20Tour,%20saya%20tertarik%20dengan%20${encodeURIComponent(p.nama)}" target="_blank" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-700 p-3 rounded-xl flex items-center justify-center transition">
+                <i class="fab fa-whatsapp text-xl"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderGaleri() {
+      const container = document.getElementById('galeri-list');
+      if (siteData.galeriList.length === 0) {
+        container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400">Belum ada foto galeri.</div>`;
+        return;
+      }
+      container.innerHTML = siteData.galeriList.map(src => `
+        <div onclick="openLightbox('${src}')" class="aspect-square bg-slate-100 rounded-2xl overflow-hidden shadow cursor-pointer group relative">
+          <img src="${src}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+          <div class="absolute inset-0 bg-blue-950/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-3xl transition duration-300">
+            <i class="fas fa-eye"></i>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderTestimoni() {
+      const container = document.getElementById('testimoni-list');
+      if (siteData.testimoniList.length === 0) {
+        container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400">Belum ada ulasan dari customer.</div>`;
+        return;
+      }
+      container.innerHTML = siteData.testimoniList.map(t => `
+        <div class="bg-white p-8 rounded-3xl shadow-lg border border-slate-100 relative flex flex-col justify-between">
+          <span class="absolute -top-4 -left-2 text-6xl text-amber-300 opacity-30 select-none">“</span>
+          <div>
+            <p class="text-slate-600 italic leading-relaxed text-sm relative z-10">"${t.text}"</p>
+          </div>
+          <div class="flex items-center gap-4 mt-6 pt-6 border-t border-slate-100">
+            <img src="${t.img || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80'}" class="w-12 h-12 rounded-full object-cover border-2 border-amber-400 shadow">
+            <div>
+              <p class="font-bold text-slate-900 text-sm">${t.nama}</p>
+              <div class="flex text-amber-400 text-xs mt-1">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // -------------------------------------------------------------------------
+    // FILE HANDLERS (IMAGE UPLOAD VIA BASE64)
+    // -------------------------------------------------------------------------
+    function uploadHeroBg(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        if (file.size > 3 * 1024 * 1024) {
+          showToast("❌ File terlalu besar! Maksimal ukuran file 3MB.", "error");
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          siteData.heroBg = e.target.result;
+          saveToStorage();
+          renderHero();
+          showToast("✅ Foto background Hero berhasil diubah!", "success");
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // SYSTEM NAVIGATION & INTERACTIONS
+    // -------------------------------------------------------------------------
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+
+    function openLightbox(src) {
+      const lightbox = document.getElementById('lightbox');
+      const img = document.getElementById('lightbox-img');
+      img.src = src;
+      lightbox.classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.add('hidden');
+    }
+
+    // Booking Modal Function
+    function openBookingModal(packageName) {
+      document.getElementById('booking-package-name').textContent = packageName;
+      document.getElementById('book-nama').value = "";
+      document.getElementById('book-peserta').value = "";
+      document.getElementById('book-tanggal').value = "";
+      document.getElementById('book-catatan').value = "";
+      document.getElementById('booking-modal').classList.remove('hidden');
+    }
+
+    function closeBookingModal() {
+      document.getElementById('booking-modal').classList.add('hidden');
+    }
+
+    // Handle Booking Form Submit -> Redirect to WA
+    document.getElementById('booking-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const pkg = document.getElementById('booking-package-name').textContent;
+      const nama = document.getElementById('book-nama').value;
+      const peserta = document.getElementById('book-peserta').value;
+      const tgl = document.getElementById('book-tanggal').value;
+      const catatan = document.getElementById('book-catatan').value;
+
+      const formattedMessage = `Halo Mubarok Tour!\nSaya ingin memesan paket wisata:\n\n📌 *Paket:* ${pkg}\n👤 *Nama:* ${nama}\n👥 *Jumlah Peserta:* ${peserta} Orang\n📅 *Tanggal Berangkat:* ${tgl}\n💬 *Catatan:* ${catatan || '-'}\n\nMohon informasi selanjutnya, terima kasih!`;
+      
+      const waURL = `https://wa.me/6285294724777?text=${encodeURIComponent(formattedMessage)}`;
+      window.open(waURL, '_blank');
+      closeBookingModal();
+      showToast("🚀 Formulir dikirim! Mengarahkan Anda ke WhatsApp...", "success");
+    });
+
+    // Handle Contact Form Submit -> Redirect to WA
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nama = document.getElementById('contact-nama').value;
+      const nohp = document.getElementById('contact-nohp').value;
+      const pesan = document.getElementById('contact-pesan').value;
+
+      const formattedMessage = `Halo Mubarok Tour Organizer!\nAda pesan baru dari kontak website:\n\n👤 *Nama:* ${nama}\n📞 *Nomor HP:* ${nohp}\n✉️ *Pesan:* ${pesan}`;
+      
+      const waURL = `https://wa.me/6285294724777?text=${encodeURIComponent(formattedMessage)}`;
+      window.open(waURL, '_blank');
+      this.reset();
+      showToast("🚀 Mengarahkan ke WhatsApp untuk mengirim pesan...", "success");
+    });
+
+    // -------------------------------------------------------------------------
+    // ADMIN FUNCTIONS (CMS LOGIC)
+    // -------------------------------------------------------------------------
+    function showAdmin() {
+      document.getElementById('admin-panel').classList.remove('hidden');
+      document.getElementById('admin-pass').value = "";
+      document.getElementById('admin-guard').classList.remove('hidden');
+      document.getElementById('admin-content').classList.add('hidden');
+    }
+
+    function hideAdmin() {
+      document.getElementById('admin-panel').classList.add('hidden');
+    }
+
+    function loginAdmin() {
+      const pass = document.getElementById('admin-pass').value;
+      if (pass === "admin123") {
+        document.getElementById('admin-guard').classList.add('hidden');
+        document.getElementById('admin-content').classList.remove('hidden');
+        showToast("🔑 Akses Admin Diberikan!", "success");
+      } else {
+        showToast("❌ Password salah! Coba lagi.", "error");
+      }
+    }
+
+    function saveHeroText() {
+      siteData.heroTitle = document.getElementById('set-hero-title').value;
+      siteData.heroSubtitle = document.getElementById('set-hero-subtitle').value;
+      saveToStorage();
+      renderHero();
+      showToast("✅ Berhasil menyimpan teks utama!", "success");
+    }
+
+    // 1. Manage Paket
+    function renderAdminPaket() {
+      const container = document.getElementById('admin-paket-list');
+      container.innerHTML = siteData.paketList.map((p, idx) => `
+        <div class="flex items-center justify-between p-3 bg-slate-50 border rounded-xl">
+          <div class="flex items-center gap-3 truncate">
+            <img src="${p.img || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=50&q=80'}" class="w-10 h-10 object-cover rounded-lg">
+            <div class="truncate">
+              <p class="font-bold text-xs truncate text-slate-800">${p.nama}</p>
+              <p class="text-[10px] text-amber-600 font-extrabold">${p.harga}</p>
+            </div>
+          </div>
+          <div class="flex gap-1">
+            <button onclick="editPaketForm(${idx})" class="text-blue-500 hover:bg-blue-100 p-2 rounded-lg text-xs"><i class="fas fa-edit"></i></button>
+            <button onclick="deletePaket(${idx})" class="text-red-500 hover:bg-red-100 p-2 rounded-lg text-xs"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function savePaket() {
+      const nama = document.getElementById('paket-nama').value;
+      const harga = document.getElementById('paket-harga').value;
+      const deskripsi = document.getElementById('paket-deskripsi').value;
+      const fileInput = document.getElementById('paket-img-upload');
+      const editIdx = parseInt(document.getElementById('edit-paket-idx').value);
+
+      if (!nama || !harga) {
+        showToast("⚠️ Silakan isi minimal Nama Paket dan Harga!", "error");
+        return;
+      }
+
+      const proceed = (imgBase64) => {
+        const item = {
+          id: editIdx !== -1 ? siteData.paketList[editIdx].id : Date.now(),
+          nama,
+          harga,
+          deskripsi,
+          img: imgBase64 || (editIdx !== -1 ? siteData.paketList[editIdx].img : "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80")
+        };
+
+        if (editIdx !== -1) {
+          siteData.paketList[editIdx] = item;
+          showToast("✅ Paket berhasil diperbarui!", "success");
+        } else {
+          siteData.paketList.push(item);
+          showToast("✅ Paket baru ditambahkan!", "success");
+        }
+
+        saveToStorage();
+        renderAll();
+        clearPaketForm();
+      };
+
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        if (file.size > 2 * 1024 * 1024) {
+          showToast("❌ Foto Paket terlalu besar! Maksimal 2MB.", "error");
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) { proceed(e.target.result); };
+        reader.readAsDataURL(file);
+      } else {
+        proceed();
+      }
+    }
+
+    // Edit form loader
+    window.editPaketForm = function(idx) {
+      const p = siteData.paketList[idx];
+      document.getElementById('edit-paket-idx').value = idx;
+      document.getElementById('paket-nama').value = p.nama;
+      document.getElementById('paket-harga').value = p.harga;
+      document.getElementById('paket-deskripsi').value = p.deskripsi;
+      document.getElementById('paket-img-upload').value = ""; // Reset file picker
+      showToast("💡 Data dimuat di form input!", "success");
+    }
+
+    function clearPaketForm() {
+      document.getElementById('edit-paket-idx').value = "-1";
+      document.getElementById('paket-nama').value = "";
+      document.getElementById('paket-harga').value = "";
+      document.getElementById('paket-deskripsi').value = "";
+      document.getElementById('paket-img-upload').value = "";
+    }
+
+    function deletePaket(idx) {
+      if (confirm("Apakah Anda yakin ingin menghapus paket ini?")) {
+        siteData.paketList.splice(idx, 1);
+        saveToStorage();
+        renderAll();
+        showToast("🗑️ Paket berhasil dihapus!", "success");
+      }
+    }
+
+    // 2. Manage Galeri
+    function renderAdminGaleri() {
+      const container = document.getElementById('admin-galeri-list');
+      container.innerHTML = siteData.galeriList.map((src, idx) => `
+        <div class="relative group aspect-square bg-slate-100 rounded-lg overflow-hidden border">
+          <img src="${src}" class="w-full h-full object-cover">
+          <button onclick="deleteGaleri(${idx})" class="absolute top-1 right-1 bg-red-600 text-white text-[10px] p-1.5 rounded-full shadow-lg opacity-90 hover:opacity-100">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function uploadGaleri(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        if (file.size > 2 * 1024 * 1024) {
+          showToast("❌ Ukuran foto melebihi 2MB!", "error");
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          siteData.galeriList.push(e.target.result);
+          saveToStorage();
+          renderAll();
+          showToast("✅ Berhasil menambahkan foto ke Galeri!", "success");
+          input.value = "";
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function deleteGaleri(idx) {
+      if (confirm("Apakah Anda yakin ingin menghapus foto ini dari galeri?")) {
+        siteData.galeriList.splice(idx, 1);
+        saveToStorage();
+        renderAll();
+        showToast("🗑️ Foto galeri dihapus!", "success");
+      }
+    }
+
+    // 3. Manage Testimoni
+    function renderAdminTestimoni() {
+      const container = document.getElementById('admin-testi-list');
+      container.innerHTML = siteData.testimoniList.map((t, idx) => `
+        <div class="flex items-center justify-between p-3 bg-slate-50 border rounded-xl">
+          <div class="flex items-center gap-3 truncate">
+            <img src="${t.img || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=50&q=80'}" class="w-10 h-10 object-cover rounded-full">
+            <div class="truncate">
+              <p class="font-bold text-xs truncate text-slate-800">${t.nama}</p>
+              <p class="text-[10px] text-slate-400 truncate italic">"${t.text}"</p>
+            </div>
+          </div>
+          <button onclick="deleteTestimoni(${idx})" class="text-red-500 hover:bg-red-100 p-2 rounded-lg text-xs"><i class="fas fa-trash"></i></button>
+        </div>
+      `).join('');
+    }
+
+    function addTestimoni() {
+      const nama = document.getElementById('testi-nama').value;
+      const text = document.getElementById('testi-text').value;
+      const fileInput = document.getElementById('testi-img-upload');
+
+      if (!nama || !text) {
+        showToast("⚠️ Nama & isi ulasan harus diisi!", "error");
+        return;
+      }
+
+      const proceed = (imgBase64) => {
+        const item = {
+          id: Date.now(),
+          nama,
+          text,
+          img: imgBase64 || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80"
+        };
+        siteData.testimoniList.push(item);
+        saveToStorage();
+        renderAll();
+        
+        // Reset Inputs
+        document.getElementById('testi-nama').value = "";
+        document.getElementById('testi-text').value = "";
+        document.getElementById('testi-img-upload').value = "";
+        showToast("✅ Testimoni baru ditambahkan!", "success");
+      };
+
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        if (file.size > 1 * 1024 * 1024) {
+          showToast("❌ Foto avatar terlalu besar! Maksimal 1MB.", "error");
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) { proceed(e.target.result); };
+        reader.readAsDataURL(file);
+      } else {
+        proceed();
+      }
+    }
+
+    function deleteTestimoni(idx) {
+      if (confirm("Hapus testimoni ini?")) {
+        siteData.testimoniList.splice(idx, 1);
+        saveToStorage();
+        renderAll();
+        showToast("🗑️ Testimoni telah dihapus!", "success");
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // BACKUP SYSTEM (EXCEL/JSON EXPORT-IMPORT)
+    // -------------------------------------------------------------------------
+    function exportData() {
+      const jsonStr = JSON.stringify(siteData, null, 2);
+      const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(jsonStr);
+      
+      const exportFileDefaultName = 'mubarok_tour_data_backup.json';
+      
+      const linkElement = document.createElement('a');
+      linkElement.setAttribute('href', dataUri);
+      linkElement.setAttribute('download', exportFileDefaultName);
+      linkElement.click();
+      showToast("💾 Berhasil mengunduh file backup konten!", "success");
+    }
+
+    function importData(event) {
+      const input = event.target;
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          try {
+            const parsed = JSON.parse(e.target.result);
+            if (parsed.heroTitle && parsed.paketList && parsed.galeriList) {
+              siteData = parsed;
+              saveToStorage();
+              renderAll();
+              showToast("📥 Backup konten berhasil diimpor & diterapkan!", "success");
+            } else {
+              showToast("❌ Format backup tidak valid!", "error");
+            }
+          } catch (err) {
+            showToast("❌ Gagal membaca file backup!", "error");
+          }
+        };
+        reader.readAsText(file);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // SYSTEM NOTIFICATION (TOAST)
+    // -------------------------------------------------------------------------
+    function showToast(message, type = "success") {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      const bgClass = type === "success" ? "bg-emerald-500" : "bg-red-500";
+      const icon = type === "success" ? "fa-check-circle" : "fa-exclamation-circle";
+      
+      toast.className = `${bgClass} text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 transition-all duration-300 transform translate-y-5 opacity-0 text-sm font-semibold border border-white/10 z-[10000]`;
+      toast.innerHTML = `<i class="fas ${icon} text-lg"></i> <span>${message}</span>`;
+      
+      container.appendChild(toast);
+      
+      // Animations
+      setTimeout(() => {
+        toast.classList.remove('translate-y-5', 'opacity-0');
+      }, 50);
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-5', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Initial load
+    initData();
+  </script>
+</body>
+</html>
